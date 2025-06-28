@@ -87,7 +87,7 @@ const fetchAdminPosts = async (clerkUserId: string) => {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold text-gray-900">User Dashboard</h1>
             <p className="text-gray-600 mt-2">
               Welcome back, {user?.firstName || user?.emailAddresses[0]?.emailAddress}
             </p>
