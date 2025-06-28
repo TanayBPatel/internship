@@ -35,7 +35,7 @@ const Home: React.FC = () => {
   const fetchPosts = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3001/api/posts?page=${page}&limit=6`);
+      const response = await fetch(`https://internship-zm4p.onrender.com/api/posts?page=${page}&limit=6`);
       const data = await response.json();
       setPosts(data.posts);
       setPagination(data.pagination);

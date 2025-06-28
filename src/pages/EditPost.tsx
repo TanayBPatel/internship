@@ -37,7 +37,7 @@ const EditPost: React.FC = () => {
   const fetchPost = async () => {
     try {
       // First try to get from admin endpoint (includes drafts)
-      const response = await fetch(`http://localhost:3001/api/posts/${slug}`);
+      const response = await fetch(`https://internship-zm4p.onrender.com/api/posts/${slug}`);
       
       if (!response.ok) {
         throw new Error('Post not found');
@@ -71,7 +71,7 @@ const EditPost: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${slug}`, {
+      const response = await fetch(`https://internship-zm4p.onrender.com/api/posts/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

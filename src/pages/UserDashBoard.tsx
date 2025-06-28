@@ -26,7 +26,7 @@ const AdminDashboard: React.FC = () => {
 
 const fetchAdminPosts = async (clerkUserId: string) => {
   try {
-    const response = await fetch('http://localhost:3001/api/posts/user', {
+    const response = await fetch('https://internship-zm4p.onrender.com/api/posts/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const fetchAdminPosts = async (clerkUserId: string) => {
     if (!confirm('Are you sure you want to delete this post?')) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${slug}`, {
+      const response = await fetch(`https://internship-zm4p.onrender.com/api/posts/${slug}`, {
         method: 'DELETE',
       });
 

@@ -32,7 +32,7 @@ const PostPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:3001/api/posts/${postSlug}`);
+      const response = await fetch(`https://internship-zm4p.onrender.com/api/posts/${postSlug}`);
       
       if (!response.ok) {
         if (response.status === 404) {

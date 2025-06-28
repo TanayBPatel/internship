@@ -313,7 +313,7 @@ const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   }
 
   try {
-    const response = await fetch('http://localhost:3001/api/posts', {
+    const response = await fetch('https://internship-zm4p.onrender.com/api/posts', {
       method: 'POST',
       body: form
     });
