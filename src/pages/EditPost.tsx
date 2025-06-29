@@ -85,7 +85,11 @@ const EditPost: React.FC = () => {
       });
 
       if (response.ok) {
-        navigate('/admin');
+        if (user?.publicMetadata?.role === "admin") {
+          navigate('/admin');
+        } else {
+          navigate('/user');
+        }
       } else {
         const error = await response.json();
         alert(error.error || 'Failed to update post');
@@ -131,7 +135,7 @@ const EditPost: React.FC = () => {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Post not found</h1>
           <Link
-            to="/admin"
+            to={user?.publicMetadata?.role === "admin" ? "/admin" : "/user"}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -147,7 +151,7 @@ const EditPost: React.FC = () => {
       {/* Header */}
       <div className="mb-8">
         <Link
-          to="/admin"
+          to={user?.publicMetadata?.role === "admin" ? "/admin" : "/user"}
           className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4 font-medium transition-colors"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />

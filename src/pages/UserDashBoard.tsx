@@ -13,38 +13,37 @@ interface Post {
   readTime: number;
 }
 
-const AdminDashboard: React.FC = () => {
+const UserDashboard: React.FC = () => {
   const { user } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  if (user?.id) {
-    fetchAdminPosts(user.id);
-  }
-}, [user]);
+  useEffect(() => {
+    if (user?.id) {
+      fetchUserPosts(user.id);
+    }
+  }, [user]);
 
-const fetchAdminPosts = async (clerkUserId: string) => {
-  try {
-    const response = await fetch('https://internship-zm4p.onrender.com/api/posts/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ clerkUserId }),
-    });
+  const fetchUserPosts = async (clerkUserId: string) => {
+    try {
+      const response = await fetch('https://internship-zm4p.onrender.com/api/posts/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ clerkUserId }),
+      });
 
-    const data = await response.json();
-    setPosts(data.posts);
-    console.log('Fetched user posts:', data.posts);
-    console.log('User ID:', clerkUserId);
-  } catch (error) {
-    console.error('Error fetching user posts:', error);
-  } finally {
-    setLoading(false);
-  }
-};
-
+      const data = await response.json();
+      setPosts(data.posts);
+      console.log('Fetched user posts:', data.posts);
+      console.log('User ID:', clerkUserId);
+    } catch (error) {
+      console.error('Error fetching user posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (slug: string) => {
     if (!confirm('Are you sure you want to delete this post?')) return;
@@ -94,7 +93,7 @@ const fetchAdminPosts = async (clerkUserId: string) => {
           </div>
           
           <Link
-            to="/admin/create"
+            to="/create"
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             <Plus className="h-5 w-5 mr-2" />
@@ -128,14 +127,14 @@ const fetchAdminPosts = async (clerkUserId: string) => {
       {/* Posts Table */}
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">All Posts</h2>
+          <h2 className="text-xl font-semibold text-gray-900">Your Posts</h2>
         </div>
 
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg mb-4">No posts created yet</p>
             <Link
-              to="/admin/create"
+              to="/create"
               className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               <Plus className="h-5 w-5 mr-2" />
@@ -209,7 +208,7 @@ const fetchAdminPosts = async (clerkUserId: string) => {
                         )}
                         
                         <Link
-                          to={`/admin/edit/${post.slug}`}
+                          to={`/edit/${post.slug}`}
                           className="text-indigo-600 hover:text-indigo-900 p-1"
                           title="Edit Post"
                         >
@@ -236,4 +235,4 @@ const fetchAdminPosts = async (clerkUserId: string) => {
   );
 };
 
-export default AdminDashboard;
+export default UserDashboard;

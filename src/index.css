@@ -7,6 +7,11 @@
   font-family: 'Inter', sans-serif;
 }
 
+/* Hide Clerk branding footer */
+.cl-internal-b3fm6y {
+  display: none !important;
+}
+
 /* Custom styles for Quill editor */
 .ql-editor {
   min-height: 300px;

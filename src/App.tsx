@@ -1,13 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import PostPage from './pages/PostPage';
 import AdminDashboard from './pages/AdminDashboard';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import UserDashboard from './pages/UserDashBoard';
+import Unauthorized from './pages/Unauthorized';
+
 function App() {
   return (
     <Router>
@@ -17,50 +19,54 @@ function App() {
           {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/post/:slug" element={<PostPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           
           {/* Protected admin routes */}
           <Route
             path="/admin"
             element={
-              <SignedIn>
+              <ProtectedRoute requiredRole="admin">
                 <AdminDashboard />
-              </SignedIn>
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Protected create/edit routes (accessible to both admin and users) */}
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <CreatePost />
+              </ProtectedRoute>
             }
           />
           
           <Route
-            path="/admin/create"
+            path="/edit/:slug"
             element={
-              <SignedIn>
-                <CreatePost />
-              </SignedIn>
-            }
-          />
-          <Route
-            path="/admin/edit/:slug"
-            element={
-              <SignedIn>
+              <ProtectedRoute>
                 <EditPost />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
+          
+          {/* Protected user routes */}
           <Route
             path="/user"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <UserDashboard />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
+          
+          {/* Redirect old admin routes to new structure */}
+          <Route path="/admin/create" element={<Navigate to="/create" replace />} />
+          <Route path="/admin/edit/:slug" element={<Navigate to="/edit/:slug" replace />} />
+          
+          {/* Catch all route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-
-        
-        
-        <SignedOut>
-          <Routes>
-            <Route path="/admin*" element={<RedirectToSignIn />} />
-          </Routes>
-        </SignedOut>
       </div>
     </Router>
   );

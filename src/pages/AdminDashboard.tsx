@@ -82,7 +82,7 @@ const AdminDashboard: React.FC = () => {
           </div>
           
           <Link
-            to="/admin/create"
+            to="/create"
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             <Plus className="h-5 w-5 mr-2" />
@@ -123,7 +123,7 @@ const AdminDashboard: React.FC = () => {
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg mb-4">No posts created yet</p>
             <Link
-              to="/admin/create"
+              to="/create"
               className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               <Plus className="h-5 w-5 mr-2" />
@@ -197,7 +197,7 @@ const AdminDashboard: React.FC = () => {
                         )}
                         
                         <Link
-                          to={`/admin/edit/${post.slug}`}
+                          to={`/edit/${post.slug}`}
                           className="text-indigo-600 hover:text-indigo-900 p-1"
                           title="Edit Post"
                         >
