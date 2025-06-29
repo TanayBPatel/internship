@@ -12,7 +12,7 @@ interface Post {
   createdAt: string;
   readTime: number;
   tags: string[];
-    image?: string | null;
+  image?: string | null;
 }
 
 interface Pagination {
@@ -63,179 +63,121 @@ const Home: React.FC = () => {
   if (loading && posts.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-600"></div>
       </div>
     );
   }
 
   return (
-    
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-     <Helmet>
-  <title>BlogHub | Discover Tech Blogs & Tutorials</title>
-  <meta
-    name="description"
-    content="Stay updated with high-quality tech blogs, tutorials, and stories on web development, JavaScript, React, and more."
-  />
-  <meta
-    name="keywords"
-    content="bloghub, tech blog, react, javascript, web development, programming tutorials"
-  />
-
-  <meta property="og:title" content="BlogHub | Discover Tech Blogs & Tutorials" />
-  <meta
-    property="og:description"
-    content="Explore insightful blogs, developer guides, and stories from the BlogHub community."
-  />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourdomain.com/" />
-</Helmet>
-
+      <Helmet>
+        <title>BlogHub | Discover Tech Blogs & Tutorials</title>
+        <meta
+          name="description"
+          content="Stay updated with high-quality tech blogs, tutorials, and stories on web development, JavaScript, React, and more."
+        />
+        <meta
+          name="keywords"
+          content="bloghub, tech blog, react, javascript, web development, programming tutorials"
+        />
+        <meta property="og:title" content="BlogHub | Discover Tech Blogs & Tutorials" />
+        <meta
+          property="og:description"
+          content="Explore insightful blogs, developer guides, and stories from the BlogHub community."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com/" />
+      </Helmet>
 
       {/* Hero Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-          Welcome to <span className="text-blue-600">BlogHub</span>
+      <div className="text-center mb-16">
+        <h1 className="text-4xl sm:text-5xl font-bold text-primary-900 mb-6">
+          Welcome to <span className="text-accent-600">BlogHub</span>
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+        <p className="text-xl text-primary-600 max-w-2xl mx-auto mb-10 leading-relaxed">
           Discover insights, stories, and knowledge from our community of writers
         </p>
         
         {/* Search Bar */}
         <div className="max-w-md mx-auto relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-400" />
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-primary-400" />
           </div>
           <input
             type="text"
             placeholder="Search posts..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block w-full pl-12 pr-4 py-3 border border-primary-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200 bg-white shadow-sm"
           />
         </div>
       </div>
 
       {/* Posts Grid */}
       {filteredPosts.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">
+        <div className="text-center py-16">
+          <p className="text-primary-500 text-lg">
             {searchTerm ? 'No posts found matching your search.' : 'No posts available yet.'}
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {filteredPosts.map((post) => (
-  <article
-    key={post._id}
-    className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-  >
-    {/* Post Image */}
-    {post.image && (
-      <img
-        src={post.image}
-        alt={post.title}
-        className="w-full h-48 object-cover"
-      />
-    )}
-
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center text-sm text-gray-500">
-          <Calendar className="h-4 w-4 mr-1" />
-          {formatDate(post.createdAt)}
-        </div>
-        <div className="flex items-center text-sm text-gray-500">
-          <Clock className="h-4 w-4 mr-1" />
-          {post.readTime} min read
-        </div>
-      </div>
-
-      <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-        {post.title}
-      </h2>
-
-      <p className="text-gray-600 mb-4 line-clamp-3">
-        {post.excerpt}
-      </p>
-
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-gray-700">
-          by {post.author}
-        </span>
-
-        <Link
-          to={`/post/${post.slug}`}
-          className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
-        >
-          Read more
-          <ArrowRight className="h-4 w-4 ml-1" />
-        </Link>
-      </div>
-
-      {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-4">
-          {post.tags.slice(0, 3).map((tag, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  </article>
-))}
-
-          {/* {filteredPosts.map((post) => (
             <article
               key={post._id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+              className="card hover:shadow-md transition-all duration-300 group"
             >
+              {/* Post Image */}
+              {post.image && (
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+
               <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Calendar className="h-4 w-4 mr-1" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center text-sm text-primary-500">
+                    <Calendar className="h-4 w-4 mr-2" />
                     {formatDate(post.createdAt)}
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="h-4 w-4 mr-1" />
+                  <div className="flex items-center text-sm text-primary-500">
+                    <Clock className="h-4 w-4 mr-2" />
                     {post.readTime} min read
                   </div>
                 </div>
 
-                <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                <h2 className="text-xl font-semibold text-primary-900 mb-3 line-clamp-2 group-hover:text-accent-600 transition-colors">
                   {post.title}
                 </h2>
 
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-primary-600 mb-4 line-clamp-3 leading-relaxed">
                   {post.excerpt}
                 </p>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <span className="text-sm font-medium text-gray-700">
-                      by {post.author}
-                    </span>
-                  </div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium text-primary-700">
+                    by {post.author}
+                  </span>
 
                   <Link
                     to={`/post/${post.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                    className="inline-flex items-center text-accent-600 hover:text-accent-700 font-medium text-sm transition-colors"
                   >
                     Read more
-                    <ArrowRight className="h-4 w-4 ml-1" />
+                    <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
 
                 {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex flex-wrap gap-2">
                     {post.tags.slice(0, 3).map((tag, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
+                        className="px-3 py-1 bg-accent-50 text-accent-700 text-xs rounded-full font-medium"
                       >
                         {tag}
                       </span>
@@ -244,39 +186,29 @@ const Home: React.FC = () => {
                 )}
               </div>
             </article>
-          ))} */}
+          ))}
         </div>
       )}
 
       {/* Pagination */}
-      {pagination && pagination.pages > 1 && !searchTerm && (
-        <div className="flex justify-center space-x-2">
+      {pagination && pagination.pages > 1 && (
+        <div className="flex justify-center items-center space-x-2">
           <button
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 border border-gray-300 text-gray-500 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-medium text-primary-600 bg-white border border-primary-300 rounded-lg hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             Previous
           </button>
           
-          {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 border rounded-md ${
-                currentPage === page
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'border-gray-300 text-gray-500 hover:bg-gray-50'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
+          <span className="px-4 py-2 text-sm text-primary-600">
+            Page {currentPage} of {pagination.pages}
+          </span>
           
           <button
-            onClick={() => setCurrentPage(Math.min(pagination.pages, currentPage + 1))}
+            onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === pagination.pages}
-            className="px-4 py-2 border border-gray-300 text-gray-500 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-medium text-primary-600 bg-white border border-primary-300 rounded-lg hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             Next
           </button>
